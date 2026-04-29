@@ -14,13 +14,15 @@ There was no centralized visibility into:
 
 - Difficult to identify failing or inactive integrations
 - No clear prioritization based on business impact
-- Data was fragmented across tools (Zapier, internal systems, Jira)
-- No historical tracking for trend analysis
+- Data was fragmented across tools such as Zapier, Mixpanel, internal account data, and operational tracking sheets
+- No consistent model to compare 7-day, 14-day, and 30-day inactivity windows
+- Limited historical tracking for trend analysis
 
 ## Constraints
 
-- Data needed to be manually extracted on a weekly basis
-- Dashboard had to be built using Google Sheets and Looker Studio
+- The dashboard had to be built using Google Sheets and Looker Studio
+- Mixpanel activity data could be pulled into Sheets through a connected extension, but still required a controlled refresh process
+- Some account and ownership data needed to be maintained or normalized separately
 - Complexity needed to be handled at the data layer, not in visualization
 
 ## My Role
@@ -28,6 +30,8 @@ There was no centralized visibility into:
 - Designed the data model
 - Defined KPIs and risk metrics
 - Built the data pipeline in Google Sheets
+- Connected Mixpanel reports into Sheets using the Sheets <> Mixpanel extension
+- Structured 7-day, 14-day, and 30-day inactivity views
 - Created the dashboard in Looker Studio
 - Structured reporting views for operations
 
@@ -35,21 +39,26 @@ There was no centralized visibility into:
 
 I identified that the biggest gap was not data availability, but data structure.
 
-The raw data existed, but:
+The raw activity data existed in Mixpanel, and account/business context existed in other operational sources, but:
 
-- It was not normalized
-- There was no consistent time-based tracking
-- No clear definition of inactive vs active integrations
+- The data was not normalized for reporting
+- Activity windows needed to be compared consistently
+- Integration relevance needed to be separated from overall automation volume
+- Account ownership and MRR context needed to be joined to integration activity
+- Dashboard logic would become fragile if too much calculation lived directly in Looker Studio
 
 ## Approach
 
 I built a layered data model:
 
-1. Raw data (weekly exports)
-2. Cleaned data (normalized fields)
-3. Calculated fields (KPIs and risk metrics)
+1. Mixpanel activity reports synced into Google Sheets
+2. Supporting account and integration metadata
+3. Cleaned and normalized fields
+4. Helper columns for 7-day, 14-day, and 30-day inactivity logic
+5. Calculated KPIs and risk metrics
+6. Looker Studio reporting views
 
-I also introduced time-based snapshots to track changes over time.
+The refresh process became partially automated: Mixpanel reports were configured and could be refreshed directly inside Google Sheets using the extension's sync process, instead of relying only on manual CSV exports.
 
 ## Solution
 
@@ -64,13 +73,15 @@ Created a dashboard with key views such as:
 ## Architecture / Flow
 
 ```text
-Data Sources (Zapier / Internal / Jira)
+Mixpanel Reports (7d / 14d / 30d activity windows)
    ↓
-Weekly CSV Exports
+Google Sheets <> Mixpanel Extension (Sync Now refresh)
    ↓
-Google Sheets (Source of Truth)
+Google Sheets Source of Truth
    ↓
-Helper Columns & Calculations
+Account / MRR / Ownership Enrichment
+   ↓
+Helper Columns & KPI Calculations
    ↓
 Looker Studio Dashboard
 ```
@@ -80,26 +91,31 @@ Looker Studio Dashboard
 - Enabled visibility into integration health
 - Quantified business risk tied to automation failures
 - Allowed prioritization based on MRR impact
-- Created a repeatable reporting process
+- Reduced reliance on fully manual CSV exports
+- Created a repeatable refresh process inside Google Sheets
 - Improved operational decision-making
 
 ## Tools & Technologies
 
 - Google Sheets
+- Sheets <> Mixpanel extension
+- Mixpanel reports
 - Looker Studio
-- CSV exports
+- Zapier activity context
 - Data modeling
 - KPI design
 
 ## Key Learnings
 
 - Data modeling should happen before visualization
-- Time-based snapshots are essential for trend analysis
+- A dashboard is stronger when refresh logic is controlled and repeatable
+- Time-based activity windows are essential for integration health monitoring
 - Simpler dashboards are more effective when data is well-structured
 - Operational metrics must connect to business impact (MRR)
 
 ## Sanitization Notes
 
 - Real customer data and financial values were generalized
-- Internal system names simplified
+- Internal system names simplified where needed
 - Data structures represented conceptually
+- Screenshots and raw exports are excluded unless recreated with fictional data
