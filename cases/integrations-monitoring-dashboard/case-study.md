@@ -1,6 +1,6 @@
 # Case: Integrations Monitoring Dashboard
 
-> Designed a hybrid data model combining Zapier inventory data, Salesforce account metadata, and Mixpanel activity windows to monitor integration health and quantify MRR at risk.
+> Designed a hybrid data model combining Zapier inventory data, Salesforce account metadata, Mixpanel activity windows, and weekly snapshots to monitor integration health, quantify MRR at risk, and track trends over time.
 
 ## Context
 
@@ -22,6 +22,7 @@ There was no centralized visibility into:
 - Account metadata such as MRR, CS owner, Salesforce ID, and merchant ID lived in Salesforce
 - A single account could have multiple zaps with different purposes, which created MRR duplication risk if reporting directly from raw zap-level data
 - No consistent model to compare 7-day, 14-day, and 30-day inactivity windows
+- No historical snapshot layer to understand whether integration risk was improving or getting worse over time
 
 ## Constraints
 
@@ -29,6 +30,7 @@ There was no centralized visibility into:
 - Zapier inventory data came from two account-level sources
 - Mixpanel activity data could be pulled into Sheets through a connected extension, but still required a controlled refresh process
 - Salesforce account data had to be used for enrichment and MRR context
+- Trend reporting required a snapshot layer because the modeled table represented the current state after each refresh
 - Complexity needed to be handled at the data layer, not in visualization
 
 ## My Role
@@ -40,7 +42,8 @@ There was no centralized visibility into:
 - Matched account names to Salesforce records to retrieve merchant IDs, MRR, and CS ownership
 - Used merchant ID as a cross-reference key for Mixpanel activity windows
 - Created unique account logic to avoid duplicate MRR counting
-- Created the dashboard in Looker Studio
+- Created a weekly snapshot process to support trend reporting
+- Created the dashboard in Looker Studio, including current-state and trend views
 
 ## Investigation
 
@@ -57,6 +60,7 @@ Key findings:
 - Merchant ID became a stronger cross-reference key for connecting account records to Mixpanel activity reports
 - Raw zap-level reporting could duplicate MRR because one account may have multiple zaps
 - A unique-account layer was needed to report account-level exposure accurately
+- Trend reporting required storing weekly snapshots because current-state dashboard data would otherwise overwrite prior conditions
 
 ## Approach
 
@@ -69,14 +73,17 @@ I built a layered data model:
 5. Account name extraction and normalization
 6. Merchant ID cross-reference logic
 7. Unique account layer to avoid duplicated MRR
-8. Final modeled table for dashboarding
-9. Looker Studio reporting views
+8. Final modeled table for current-state dashboarding
+9. Weekly snapshot layer for trend analysis
+10. Looker Studio reporting views
 
-The model separates zap-level operational monitoring from account-level business risk reporting.
+The model separates zap-level operational monitoring, account-level business risk reporting, and historical trend analysis.
 
 ## Solution
 
-Created a dashboard with key views such as:
+Created a dashboard with two main analytical layers:
+
+### Current-state monitoring
 
 - Total integrations vs relevant integrations
 - Inactive integrations by 7-day, 14-day, and 30-day windows
@@ -85,6 +92,15 @@ Created a dashboard with key views such as:
 - CRM-related vs non-core integrations
 - CS owner and ownership views
 - Failure categories and risk levels
+
+### Trend monitoring
+
+- Weekly snapshot date
+- Total relevant zaps over time
+- Inactive integrations by risk bucket over time
+- MRR at risk trend by inactivity window
+- Unique accounts at risk trend
+- Movement between short-term and long-term inactivity buckets
 
 ## Architecture / Flow
 
@@ -103,10 +119,25 @@ Mixpanel Activity Windows matched by Merchant ID
           ↓
 Unique Account Layer to prevent duplicated MRR
           ↓
-Final Modeled Table for dashboarding
+Final Modeled Table for current-state dashboarding
+          ↓
+Weekly Snapshot Table for trend reporting
           ↓
 Looker Studio Dashboard
 ```
+
+## Dashboard Design
+
+The dashboard was designed to answer two different operational questions:
+
+1. What needs attention right now?
+2. Is the overall integration risk getting better or worse over time?
+
+To support this, I separated the dashboard into current-state views and trend views.
+
+The current-state view helped identify specific inactive integrations, affected accounts, MRR exposure, ownership, CRM type, and failure category.
+
+The trends view used weekly snapshots to show whether inactivity and MRR-at-risk were increasing, decreasing, or shifting between risk buckets over time.
 
 ## Impact
 
@@ -115,6 +146,7 @@ Looker Studio Dashboard
 - Allowed prioritization based on MRR impact
 - Reduced the risk of inflated MRR caused by duplicate zap-level records
 - Created a repeatable refresh and enrichment process inside Google Sheets
+- Added historical trend visibility through weekly snapshots
 - Improved operational decision-making across support and customer success workflows
 
 ## Tools & Technologies
@@ -127,6 +159,7 @@ Looker Studio Dashboard
 - Looker Studio
 - Data modeling
 - KPI design
+- Snapshot-based trend reporting
 
 ## Key Learnings
 
@@ -134,6 +167,7 @@ Looker Studio Dashboard
 - Zap-level records and account-level risk need to be modeled separately
 - A stable cross-reference key is essential when joining operational and account data
 - Time-based activity windows are essential for integration health monitoring
+- Snapshot tables are necessary when current-state data needs to become historical trend data
 - Operational metrics must connect to business impact without inflating revenue exposure
 
 ## Sanitization Notes
