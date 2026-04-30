@@ -22,9 +22,9 @@ This repository is not intended to showcase only code. It is designed to show ho
 
 | Case Study | Focus Area | What it demonstrates |
 |---|---|---|
-| [Intercom Data Cleanup & Salesforce Validation](./cases/intercom-data-cleanup-validation/case-study.md) | Data Quality / Cross-system Validation | Structured a validation workflow to classify active, churned, duplicate, demo, and investigation records across Intercom and Salesforce. |
-| [Integrations Copilot: AI + Slack + Automation](./cases/integrations-copilot-ai-automation/case-study.md) | AI Operations / Internal Enablement | Designed an AI-powered assistant to guide Tier I integration triage, reduce unnecessary escalations, and standardize support answers. |
-| [Integrations Monitoring Dashboard](./cases/integrations-monitoring-dashboard/case-study.md) | BI / Operational Monitoring | Built a dashboarding model to track integration health, inactivity trends, and business risk tied to MRR exposure. |
+| [Intercom Data Cleanup & Salesforce Validation](./cases/intercom-data-cleanup-validation/case-study.md) | Data Quality / Cross-system Validation | Structured a validation workflow for 16,513 Intercom user records, increasing merchant match coverage and reducing ambiguous investigation cases. |
+| [Integrations Copilot: AI + Slack + Automation](./cases/integrations-copilot-ai-automation/case-study.md) | AI Operations / Integration Triage | Built an AI-assisted Slack workflow to centralize integration research across native options, Zapier availability, and internal guidelines. |
+| [Integrations Monitoring Dashboard](./cases/integrations-monitoring-dashboard/case-study.md) | BI / Data Modeling / Operational Monitoring | Designed a hybrid data model combining Zapier, Salesforce, and Mixpanel data to monitor integration health, quantify MRR at risk, and track weekly trends. |
 
 ## Highlighted Impact
 
@@ -56,23 +56,6 @@ This repository is not intended to showcase only code. It is designed to show ho
 - Google Sheets
 - OpenAI Platform
 - CRM and support operations tools
-
-## Case Study Structure
-
-Each case follows a consistent format:
-
-1. Context
-2. Problem
-3. Constraints
-4. My Role
-5. Investigation
-6. Approach
-7. Solution
-8. Architecture / Flow
-9. Impact
-10. Tools & Technologies
-11. Key Learnings
-12. Sanitization Notes
 
 ## Data Privacy & Sanitization
 
