@@ -129,12 +129,12 @@ This reduced ambiguous cases and increased the number of records with a clear ne
 
 | Metric | Before | After | Change |
 |---|---:|---:|---:|
-| Merchant Match | 12,303 | 13,240 | +937 |
-| Merchant Match Rate | 74.50% | 80.18% | +5.68 p.p. |
-| Delete | 9,646 | 10,324 | +678 |
-| Delete Rate | 58.41% | 62.52% | +4.11 p.p. |
-| Investigate | 1,552 | 879 | -673 |
-| Review | 1,953 | 1,584 | -369 |
+| Merchant Match | 12,303 | 13,335 | +1,032 |
+| Merchant Match Rate | 74.50% | 80.75% | +6.25 p.p. |
+| Delete | 9,646 | 10,475 | +829 |
+| Delete Rate | 58.41% | 63.43% | +5.02 p.p. |
+| Investigate | 1,552 | 747 | -805 |
+| Review | 1,953 | 1,570 | -383 |
 
 The enrichment step significantly reduced the number of unclear records and increased the first cleanup wave confidence.
 
@@ -168,8 +168,9 @@ Wave-based cleanup plan
 
 - Created a repeatable framework for validating 16,513 user records across systems
 - Classified 10,475 records for deletion with a clear rule-based rationale
-- Reduced investigation cases from 1,552 to 879 after manual enrichment
-- Increased merchant match coverage by 937 records
+- Reduced investigation cases from 1,552 to 747 after manual enrichment
+- Increased merchant match coverage by 1,032 records
+- Increased the delete classification by 829 records after enrichment
 - Separated high-confidence cleanup actions from ambiguous cases
 - Improved visibility into stale, churned, demo, and duplicate records
 - Turned a manual cleanup effort into a structured operational workflow
