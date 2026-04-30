@@ -43,7 +43,7 @@ There was no centralized visibility into:
 - Used merchant ID as a cross-reference key for Mixpanel activity windows
 - Created unique account logic to avoid duplicate MRR counting
 - Created a weekly snapshot process to support trend reporting
-- Created the dashboard in Looker Studio, including current-state and trend views
+- Created the dashboard in Looker Studio, including health, risk prioritization, and trend views
 
 ## Investigation
 
@@ -81,26 +81,50 @@ The model separates zap-level operational monitoring, account-level business ris
 
 ## Solution
 
-Created a dashboard with two main analytical layers:
+Created a three-tab dashboard designed for different operational use cases:
 
-### Current-state monitoring
+### 1. Health Overview
 
-- Total integrations vs relevant integrations
-- Inactive integrations by 7-day, 14-day, and 30-day windows
-- MRR at risk by inactivity bucket
-- Unique accounts at risk
-- CRM-related vs non-core integrations
-- CS owner and ownership views
-- Failure categories and risk levels
+A high-level view of the integration ecosystem, including:
 
-### Trend monitoring
+- Zap-level table for current integration status
+- Total zaps
+- MRR duplicated by zaps
+- Unique accounts MRR
+- Total CRM-related zaps
+- CRM-related MRR
+- MRR at risk for inactive integrations
+- Top CRMs
+- Accounts with zero sends
+- CS owner MRR at risk
 
-- Weekly snapshot date
-- Total relevant zaps over time
-- Inactive integrations by risk bucket over time
-- MRR at risk trend by inactivity window
-- Unique accounts at risk trend
-- Movement between short-term and long-term inactivity buckets
+This page was designed to answer: "What is the current health of the integration ecosystem?"
+
+### 2. Risk & Prioritization
+
+A focused operational view for identifying which integrations or accounts need attention first, including:
+
+- Accounts by selected risk bucket
+- MRR at risk
+- Risk by CS owner
+- Risk level by merchant/account
+- Risk by CRM
+- Table of inactive or flagged integrations
+- Zap notes and failure context
+
+This page was designed to answer: "Which risks should we prioritize first, and who owns them?"
+
+### 3. Trends
+
+A historical view powered by weekly snapshots, including:
+
+- Integration ecosystem trend
+- Relevant zaps vs off-core zaps vs total zaps
+- Inactive integrations vs coverage over time
+- MRR at risk trend and composition
+- Movement across 7-day, 14-day, and 30-day inactivity buckets
+
+This page was designed to answer: "Is integration risk improving, worsening, or shifting over time?"
 
 ## Architecture / Flow
 
@@ -119,25 +143,26 @@ Mixpanel Activity Windows matched by Merchant ID
           ↓
 Unique Account Layer to prevent duplicated MRR
           ↓
-Final Modeled Table for current-state dashboarding
+Final Modeled Table for Health Overview and Risk views
           ↓
-Weekly Snapshot Table for trend reporting
+Weekly Snapshot Table for Trends view
           ↓
 Looker Studio Dashboard
 ```
 
 ## Dashboard Design
 
-The dashboard was designed to answer two different operational questions:
+The dashboard was organized around three operational questions:
 
-1. What needs attention right now?
-2. Is the overall integration risk getting better or worse over time?
+1. What is the overall integration health right now?
+2. Which accounts or integrations should be prioritized?
+3. Is the overall risk getting better or worse over time?
 
-To support this, I separated the dashboard into current-state views and trend views.
+To support this, the dashboard was divided into three tabs: Health Overview, Risk & Prioritization, and Trends.
 
-The current-state view helped identify specific inactive integrations, affected accounts, MRR exposure, ownership, CRM type, and failure category.
+Health Overview provides the executive/operational summary. Risk & Prioritization turns the same modeled data into an action queue. Trends uses weekly snapshots to turn current-state metrics into a time-series view.
 
-The trends view used weekly snapshots to show whether inactivity and MRR-at-risk were increasing, decreasing, or shifting between risk buckets over time.
+This separation made the dashboard useful for both quick monitoring and deeper operational follow-up.
 
 ## Impact
 
@@ -168,6 +193,7 @@ The trends view used weekly snapshots to show whether inactivity and MRR-at-risk
 - A stable cross-reference key is essential when joining operational and account data
 - Time-based activity windows are essential for integration health monitoring
 - Snapshot tables are necessary when current-state data needs to become historical trend data
+- Dashboard structure should reflect different decision modes: monitoring, prioritization, and trend analysis
 - Operational metrics must connect to business impact without inflating revenue exposure
 
 ## Sanitization Notes
