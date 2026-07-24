@@ -167,12 +167,15 @@ The completed actions produced measurable operational and financial impact:
 | Accounts suspended | 4,129 |
 | Accounts intentionally retained | 1,272 |
 | Phone numbers released | 933 |
+| API action attempts processed | 6,607 |
+| Confirmed suspensions and phone-number releases | 5,062 |
 | Accounts deleted | 28 |
-| Confirmed suspension and release actions | 5,062 |
 | Accounts still pending audit | 834 |
 | Quarterly billing baseline analyzed | US$27,437.05 |
 | Recurring monthly savings | **US$766.55** |
 | Annualized savings | **US$9,198.60** |
+
+The **6,607 processed action attempts** include successful changes as well as non-actionable API outcomes such as accounts returning `no number`. These outcomes were preserved in the execution logs instead of being counted as completed releases. The confirmed operational results remain **4,129 account suspensions**, **933 phone-number releases**, and **28 account deletions**.
 
 The cleanup reduced the recurring monthly baseline by approximately **8.4%**, with additional savings potential still available from the remaining audit queue.
 
@@ -228,7 +231,7 @@ It established:
 - A risk-based action hierarchy
 - Safe API execution through local Python tooling
 - Batch-level control over production changes
-- A durable record of every attempted and completed action
+- A durable record of **6,607 processed action attempts**, including successful, failed, and non-actionable results
 - **US$766.55 in recurring monthly savings**
 - **US$9,198.60 in annualized savings**
 - A remaining queue of 834 accounts with further optimization potential
