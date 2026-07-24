@@ -25,6 +25,7 @@ This repository is not intended to showcase only code. It is designed to show ho
 | [Intercom Data Cleanup & Salesforce Validation](./cases/intercom-data-cleanup-validation/case-study.md) | Data Quality / Cross-system Validation | Structured a validation workflow for 16,513 Intercom user records, increasing merchant match coverage and reducing ambiguous investigation cases. |
 | [Integrations Copilot: AI + Slack + Automation](./cases/integrations-copilot-ai-automation/case-study.md) | AI Operations / Integration Triage | Built an AI-assisted Slack workflow to centralize integration research across native options, Zapier availability, and internal guidelines. |
 | [Integrations Monitoring Dashboard](./cases/integrations-monitoring-dashboard/case-study.md) | BI / Data Modeling / Operational Monitoring | Designed a hybrid data model combining Zapier, Salesforce, and Mixpanel data to monitor integration health, quantify MRR at risk, and track weekly trends. |
+| [AI-Powered Integration Monitoring Agent](./cases/ai-powered-integration-monitoring-agent/case-study.md) | AI Operations / Autonomous Monitoring | Built an autonomous workflow combining Google Drive, Mixpanel, Claude, and Slack to detect inactivity, separate risk from operational ownership, and generate daily executive-ready reports. |
 
 ## Highlighted Impact
 
