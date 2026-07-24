@@ -26,6 +26,7 @@ This repository is not intended to showcase only code. It is designed to show ho
 | [Integrations Copilot: AI + Slack + Automation](./cases/integrations-copilot-ai-automation/case-study.md) | AI Operations / Integration Triage | Built an AI-assisted Slack workflow to centralize integration research across native options, Zapier availability, and internal guidelines. |
 | [Integrations Monitoring Dashboard](./cases/integrations-monitoring-dashboard/case-study.md) | BI / Data Modeling / Operational Monitoring | Designed a hybrid data model combining Zapier, Salesforce, and Mixpanel data to monitor integration health, quantify MRR at risk, and track weekly trends. |
 | [AI-Powered Integration Monitoring Agent](./cases/ai-powered-integration-monitoring-agent/case-study.md) | AI Operations / Autonomous Monitoring | Built an autonomous workflow combining Google Drive, Mixpanel, Claude, and Slack to detect inactivity, separate risk from operational ownership, and generate daily executive-ready reports. |
+| [Twilio Lifecycle Cleanup & Cost Optimization](./cases/twilio-lifecycle-cleanup/case-study.md) | Python / API Automation / FinOps | Reconciled 7,900+ accounts, safely executed 5,062 lifecycle actions, and reduced recurring Twilio costs by US$766.55 per month (US$9.2K annualized). |
 
 ## Highlighted Impact
 
