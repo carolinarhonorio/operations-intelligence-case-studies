@@ -258,9 +258,8 @@ Beyond the immediate cleanup, the workflow created a reusable operational patter
 
 - Complete the audit of the remaining 834 accounts
 - Reconcile all output files against the master inventory
-- Rotate or revoke the temporary API credentials
-- Remove any local credential references from the project workspace
 - Continue validating savings against subsequent billing cycles
+- Publish sanitized Python code samples demonstrating the CLI structure, dry-run controls, batch validation, and execution logging
 - Convert the one-time audit rules into a recurring lifecycle monitoring process
 
 ---
